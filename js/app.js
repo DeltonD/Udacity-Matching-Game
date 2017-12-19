@@ -52,8 +52,8 @@ function showCard(c){
     c.target.className = "card show";
 }
 function Wrong(card, currentc){
-    card.className = "card";
-    currentc.className = "card";
+    card.className = "card wrong";
+    currentc.className = "card wrong";
 }
 function Match(card, currentc){
     card.className = "card match";
@@ -76,6 +76,7 @@ function cardClick(c){
 When triggered calls the function that shows the card and the function that checks if there is a match
 */
 function InitEventSystem(){
+
     deck.addEventListener("click", (e) => {
         showCard(e); 
         cardClick(e);
