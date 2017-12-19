@@ -2,20 +2,22 @@
  * Create a list that holds all of your cards
  */
 var play = true;
+var started = false;
 var moves = 0;
 var stars = 3;
 var timer = 0;
-var matchs = 0;
+var interval;
+var match = 0;
+var starsE = document.getElementsByClassName("stars")[0];
 var counter = document.getElementsByClassName("moves")[0];
 var timerE = document.getElementsByClassName("timer")[0];
 var deck = document.getElementsByClassName("deck")[0];
 var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
-cards = shuffle(cards);
+
 
 var currentCard;
 
 //Create all the cards and assign their icons
-
 function InitDeck(){
     for(var i = 0; i < 16; i++){
         var cardc = document.createElement("div");
@@ -44,7 +46,6 @@ start();
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -52,24 +53,40 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 function start(){
-    setInterval(time, 1000);
+    interval = setInterval(time, 1000);
+    cards = shuffle(cards);
     InitDeck();
+    
+
+    for(i = 0; i < 3; i++){
+        starsE.innerHTML += '<li><i class="fa fa-star"></i></li>';
+    }
+
 }
 function restart(){
+    document.getElementsByClassName("popup")[0].style.display = "none";
     deck.innerHTML = "";
+    starsE.innerHTML = "";
     timer = 0;
-    counter = 0;
+    moves = 0;
     stars = 3;
+    currentCard = null;
+    counter.textContent = moves;
+    started = false;
+    clearInterval(interval);
     start();
     
 }
 function time(){
-    timer++;
-    timerE.textContent = timer;
+    if(started){
+        timer++;
+        timerE.textContent = timer;
+    }else{
+        timerE.textContent = 0;
+    }
 }
 function showCard(c){
     c.target.className = "card show";
@@ -81,19 +98,18 @@ function Wrong(card, currentc){
 function Match(card, currentc){
     card.className = "card match";
     currentc.className = "card match";
-    matchs++;
-    if(matchs == 8){
+    match++;
+    if(match == 8){
         win();
     }
 }
 function win(){
     var popup = document.getElementsByClassName("popup")[0];
     popup.children[2].textContent = "With " + moves + " Moves and " + stars + " Stars.";
-    popup.style.display = "flex";
-    
-    
+    popup.style.display = "flex";   
 }
 function cardClick(c){
+    if(!started) started = true;
     var card = c.target;
     if(currentCard == null){
         currentCard = card;
@@ -131,7 +147,7 @@ function InitEventSystem(){
         }
     });
     deck.addEventListener("click", (e) => {
-        if(play){
+        if(play && e.target.className != "deck"){
             showCard(e); 
             cardClick(e);
         }
