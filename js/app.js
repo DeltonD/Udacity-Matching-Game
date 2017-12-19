@@ -1,6 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
 var play = true;
 var started = false;
 var moves = 0;
@@ -22,7 +19,7 @@ function InitDeck(){
     for(var i = 0; i < 16; i++){
         var cardc = document.createElement("div");
         cardc.setAttribute("class", "cardcontainer");
-    
+
         var card = document.createElement("li");
         card.setAttribute("class", "card");
         card.setAttribute("id", i);
@@ -34,14 +31,10 @@ function InitDeck(){
         deck.append(cardc);
     }
 }
+
 InitEventSystem();
 start();
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -55,17 +48,36 @@ function shuffle(array) {
     }
     return array;
 }
+
+/**
+* The start function starts the time counter, suffle the cards and init the deck.
+* The for adds the 3 stars to the panel.
+* When the time function is called, the timer is updated and so the element that shows its value.
+*/
 function start(){
     interval = setInterval(time, 1000);
     cards = shuffle(cards);
     InitDeck();
-    
 
     for(i = 0; i < 3; i++){
         starsE.innerHTML += '<li><i class="fa fa-star"></i></li>';
     }
 
 }
+
+function time(){
+    if(started){
+        timer++;
+        timerE.textContent = timer;
+    }else{
+        timerE.textContent = 0;
+    }
+}
+
+/**
+* The restart function resets all the stats, clean the deck and restarts the time counter.
+* Then the start function is called to restart the game.
+*/
 function restart(){
     document.getElementsByClassName("popup")[0].style.display = "none";
     deck.innerHTML = "";
@@ -78,16 +90,14 @@ function restart(){
     started = false;
     clearInterval(interval);
     start();
-    
+
 }
-function time(){
-    if(started){
-        timer++;
-        timerE.textContent = timer;
-    }else{
-        timerE.textContent = 0;
-    }
-}
+
+/**
+* These functions change the cards classes according with the result.
+* The first one change the card class to "show", so the card flips.
+* The last one also count on combinations, and if there is already 8, the player wins.
+*/
 function showCard(c){
     c.target.className = "card show";
 }
@@ -103,37 +113,51 @@ function Match(card, currentc){
         win();
     }
 }
+
 function win(){
     var popup = document.getElementsByClassName("popup")[0];
     popup.children[2].textContent = "With " + moves + " Moves and " + stars + " Stars.";
-    popup.style.display = "flex";   
+    popup.style.display = "flex";
 }
+
+/**
+* The cardClick function checks if the clicked card and the previously stored one are the same, if so, the Match function is called, if not, the Wrong function.
+* The function also calls the updateScore function, that will increase the move counter and update the star rating when needed.
+*/
 function cardClick(c){
     if(!started) started = true;
     var card = c.target;
     if(currentCard == null){
         currentCard = card;
     }else{
-        moves++;
-        counter.textContent = moves;
-        if(Number.isInteger((moves/10))){
-            if(stars > 0){
-                stars = 3 - (moves/10);
-            }
-            if(stars < 3){
-                document.getElementsByClassName("fa fa-star")[stars].className = "fa fa-star-o";
-            }
-        }
+        updateScore();
         if(cards[card.getAttribute("id")] === cards[currentCard.getAttribute("id")]){
-            Match(card, currentCard);   
+            Match(card, currentCard);
         }else{
             Wrong(card, currentCard);
         }
         currentCard = null;
     }
 }
-/*
-When triggered calls the function that shows the card and the function that checks if there is a match
+
+function updateScore(){
+    moves++;
+    counter.textContent = moves;
+    if(Number.isInteger((moves/10))){
+        if(stars > 0){
+            stars = 3 - (moves/10);
+        }
+        if(stars < 3){
+            document.getElementsByClassName("fa fa-star")[stars].className = "fa fa-star-o";
+        }
+    }
+}
+
+/**
+* These are the Events
+* The first one triggers when a animation starts, then the player is unable to click while the animation is occurring;
+* The second one triggers when a animation ends, then is checked if it was on a wrong card try, if true, the card class is changed, so the opening animation plays backwards.
+* The third fires when the player clicks on a card, that way the card is flipped and all the process of checking occurs.
 */
 function InitEventSystem(){
     deck.addEventListener("animationstart", (e)=>{
@@ -148,18 +172,9 @@ function InitEventSystem(){
     });
     deck.addEventListener("click", (e) => {
         if(play && e.target.className != "deck"){
-            showCard(e); 
+            showCard(e);
             cardClick(e);
         }
     });
 }
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+
