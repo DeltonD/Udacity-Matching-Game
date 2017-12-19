@@ -3,6 +3,9 @@
  */
 var play = true;
 var currentCard;
+var moves = 0;
+var stars = 3;
+var counter = document.getElementsByClassName("moves")[0];
 var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
 var states = ["", "open", "match", "wrong"];
 
@@ -48,7 +51,6 @@ function shuffle(array) {
     return array;
 }
 
-
 function showCard(c){
     c.target.className = "card show";
 }
@@ -65,6 +67,14 @@ function cardClick(c){
     if(currentCard == null){
         currentCard = card;
     }else{
+        moves++;
+        counter.textContent = moves;
+        if(stars > 0){
+            stars = 3 - (moves/10);
+        }
+        if(Number.isInteger(stars) && stars < 3){
+            document.getElementsByClassName("fa fa-star")[stars].className = "fa fa-star-o";
+        }
         if(cards[card.getAttribute("id")] === cards[currentCard.getAttribute("id")]){
             Match(card, currentCard);   
         }else{
