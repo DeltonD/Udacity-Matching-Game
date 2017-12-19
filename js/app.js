@@ -2,14 +2,17 @@
  * Create a list that holds all of your cards
  */
 var play = true;
-var currentCard;
 var moves = 0;
 var stars = 3;
+var timer = 0;
+var currentCard;
 var counter = document.getElementsByClassName("moves")[0];
+var timerE = document.getElementsByClassName("timer")[0];
 var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
 var states = ["", "open", "match", "wrong"];
 
 cards = shuffle(cards);
+
 
 //Create all the cards and assign their icons
 var deck = document.getElementsByClassName("deck")[0];
@@ -29,6 +32,7 @@ for(var i = 0; i < 16; i++){
 }
 
 InitEventSystem();
+start();
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -50,7 +54,14 @@ function shuffle(array) {
 
     return array;
 }
+function start(){
+    setInterval(time, 1000);
+}
 
+function time(){
+    timer++;
+    timerE.textContent = timer;
+}
 function showCard(c){
     c.target.className = "card show";
 }
