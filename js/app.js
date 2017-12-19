@@ -1,6 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
+var play = true;
 var currentCard;
 var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
 var states = ["", "open", "match", "wrong"];
@@ -70,16 +71,27 @@ function cardClick(c){
             Wrong(card, currentCard);
         }
         currentCard = null;
-    }   
+    }
 }
 /*
 When triggered calls the function that shows the card and the function that checks if there is a match
 */
 function InitEventSystem(){
-
+    deck.addEventListener("animationstart", (e)=>{
+        play = false;
+    });
+    deck.addEventListener("animationend", (e) => {
+        play = true;
+        var c = e.target.className;
+        if(c == "card wrong"){
+            e.target.className = "card close";
+        }
+    });
     deck.addEventListener("click", (e) => {
-        showCard(e); 
-        cardClick(e);
+        if(play){
+            showCard(e); 
+            cardClick(e);
+        }
     });
 }
 /*

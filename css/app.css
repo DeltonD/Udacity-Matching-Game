@@ -69,7 +69,11 @@ h1 {
     animation: card-open 1s;
     font-size: 33px;
 }
+.deck .card.close{
+    font-size: 0px;
+    animation: card-open 1s alternate;
 
+}
 .deck .card.match {
     cursor: default;
     background: #02ccba;
@@ -120,6 +124,7 @@ There is a extra frame before 50%, to make sure color stays the same until the c
     0% {
         width:  125px;
         font-size: 0px;
+        background: #2e3d49;
     }
     49%{
         background: #2e3d49;
@@ -127,11 +132,10 @@ There is a extra frame before 50%, to make sure color stays the same until the c
     50% {
         font-size: 0px;
         width:  0px;
-        background: #02b3e4;
     }
     100% {
         width:  125px;
-        font-size: 33px;
+        
     }
 }
 @keyframes card-wrong{
