@@ -74,15 +74,18 @@ h1 {
     animation: card-open 1s alternate;
 
 }
+
 .deck .card.match {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
 }
+
 .deck .card.wrong {
-    animation: card-wrong 0.5s 2; 
+    animation: card-wrong 0.5s 2;
     font-size: 33px;
 }
+
 .deck .cardcontainer {
     display: flex;
     justify-content: center;
@@ -90,15 +93,15 @@ h1 {
     height: 125px;
     width: 125px;
 }
+
 /*
  * Styles for the Score Panel
  */
-
 .score-panel {
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
-    
+
 }
 
 .score-panel .stars {
@@ -117,6 +120,9 @@ h1 {
     float: right;
     cursor: pointer;
 }
+/*
+* Styles for the win popup
+*/
 .popup{
     display: none;
     justify-content: center;
@@ -145,8 +151,10 @@ h1 {
     border-radius: 5px;
 }
 
-/*The animation that plays when the card is opening
-There is a extra frame before 50%, to make sure color stays the same until the card turns*/
+/*
+* The animation that plays when the card is opening
+* There is a extra frame before 50%, to make sure color stays the same until the card turns.
+*/
 @keyframes card-open{
     0% {
         width:  125px;
@@ -162,9 +170,13 @@ There is a extra frame before 50%, to make sure color stays the same until the c
     }
     100% {
         width:  125px;
-        
+
     }
 }
+
+/*
+* The animation that plays when the player makes a wrong combination.
+*/
 @keyframes card-wrong{
     0%{
         transform: rotate(0deg);
