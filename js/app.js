@@ -5,32 +5,33 @@ var play = true;
 var moves = 0;
 var stars = 3;
 var timer = 0;
-var currentCard;
+var matchs = 0;
 var counter = document.getElementsByClassName("moves")[0];
 var timerE = document.getElementsByClassName("timer")[0];
+var deck = document.getElementsByClassName("deck")[0];
 var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
-var states = ["", "open", "match", "wrong"];
-
 cards = shuffle(cards);
 
+var currentCard;
 
 //Create all the cards and assign their icons
-var deck = document.getElementsByClassName("deck")[0];
-for(var i = 0; i < 16; i++){
-    var cardc = document.createElement("div");
-    cardc.setAttribute("class", "cardcontainer");
+
+function InitDeck(){
+    for(var i = 0; i < 16; i++){
+        var cardc = document.createElement("div");
+        cardc.setAttribute("class", "cardcontainer");
     
-    var card = document.createElement("li");
-    card.setAttribute("class", "card");
-    card.setAttribute("id", i);
-    var icon = document.createElement("i");
-    icon.setAttribute("class", "fa fa-" + cards[i]);
+        var card = document.createElement("li");
+        card.setAttribute("class", "card");
+        card.setAttribute("id", i);
+        var icon = document.createElement("i");
+        icon.setAttribute("class", "fa fa-" + cards[i]);
 
-    card.append(icon);
-    cardc.append(card);
-    deck.append(cardc);
+        card.append(icon);
+        cardc.append(card);
+        deck.append(cardc);
+    }
 }
-
 InitEventSystem();
 start();
 /*
@@ -56,8 +57,16 @@ function shuffle(array) {
 }
 function start(){
     setInterval(time, 1000);
+    InitDeck();
 }
-
+function restart(){
+    deck.innerHTML = "";
+    timer = 0;
+    counter = 0;
+    stars = 3;
+    start();
+    
+}
 function time(){
     timer++;
     timerE.textContent = timer;
@@ -72,6 +81,17 @@ function Wrong(card, currentc){
 function Match(card, currentc){
     card.className = "card match";
     currentc.className = "card match";
+    matchs++;
+    if(matchs == 8){
+        win();
+    }
+}
+function win(){
+    var popup = document.getElementsByClassName("popup")[0];
+    popup.children[2].textContent = "With " + moves + " Moves and " + stars + " Stars.";
+    popup.style.display = "flex";
+    
+    
 }
 function cardClick(c){
     var card = c.target;
@@ -80,11 +100,13 @@ function cardClick(c){
     }else{
         moves++;
         counter.textContent = moves;
-        if(stars > 0){
-            stars = 3 - (moves/10);
-        }
-        if(Number.isInteger(stars) && stars < 3){
-            document.getElementsByClassName("fa fa-star")[stars].className = "fa fa-star-o";
+        if(Number.isInteger((moves/10))){
+            if(stars > 0){
+                stars = 3 - (moves/10);
+            }
+            if(stars < 3){
+                document.getElementsByClassName("fa fa-star")[stars].className = "fa fa-star-o";
+            }
         }
         if(cards[card.getAttribute("id")] === cards[currentCard.getAttribute("id")]){
             Match(card, currentCard);   

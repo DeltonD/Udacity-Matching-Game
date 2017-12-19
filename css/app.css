@@ -98,6 +98,7 @@ h1 {
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
+    
 }
 
 .score-panel .stars {
@@ -116,7 +117,33 @@ h1 {
     float: right;
     cursor: pointer;
 }
-
+.popup{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: white;
+    position: fixed;
+}
+.popup i{
+    font-size: 40px;
+    color: forestgreen;
+}
+.popup p{
+    margin-top: 0;
+}
+.popup .again{
+    border: none;
+    cursor: pointer;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    text-align: center;
+    font-size: 16px;
+    background: #02ccba;
+    border-radius: 5px;
+}
 
 /*The animation that plays when the card is opening
 There is a extra frame before 50%, to make sure color stays the same until the card turns*/

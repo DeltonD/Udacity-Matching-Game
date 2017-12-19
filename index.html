@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-
+    <div class="popup">
+        <i class="fa fa-check"></i>
+        <h2>Congratulations! You Won!</h2>
+        <p>With 19 Moves and 2 Stars</p>
+        <button class="again" onclick="restart()">Play again!</button>
+    </div>
     <div class="container">
         <header>
             <h1>Matching Game</h1>
@@ -21,11 +26,11 @@
         		<li><i class="fa fa-star"></i></li>
         		<li><i class="fa fa-star"></i></li>
         	</ul>
-
+            
         	<span class="moves">0</span> Moves |
             <span class="timer">0</span> Seconds
             <div class="restart">
-        		<i class="fa fa-repeat"></i>
+        		<i class="fa fa-repeat" onclick="restart()"></i>
         	</div>
         </section>
 
