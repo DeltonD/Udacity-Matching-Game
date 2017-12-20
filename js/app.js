@@ -125,7 +125,7 @@ function Match(card, currentc){
 function win(){
     clearInterval(interval);
     var popup = document.getElementsByClassName("popup")[0];
-    popup.children[2].textContent = `With ${moves} Moves and ${stars} Stars in ${timer} Minutes.`;
+    popup.children[2].textContent = `With ${moves} Moves and ${stars} Stars in ${timer} Seconds.`;
     popup.style.display = "flex";
 }
 
