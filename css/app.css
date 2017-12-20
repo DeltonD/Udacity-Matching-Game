@@ -68,6 +68,7 @@ h1 {
     background: #02b3e4;
     animation: card-open 1s;
     font-size: 33px;
+    pointer-events: none;
 }
 .deck .card.close{
     font-size: 0px;
@@ -79,6 +80,7 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+
 }
 
 .deck .card.wrong {

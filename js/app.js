@@ -171,7 +171,7 @@ function InitEventSystem(){
         }
     });
     deck.addEventListener("click", (e) => {
-        if(play && e.target.className != "deck"){
+        if(play && e.target.nodeName == "LI"){
             showCard(e);
             cardClick(e);
         }
