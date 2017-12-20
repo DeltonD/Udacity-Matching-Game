@@ -11,10 +11,12 @@ var deck = document.getElementsByClassName("deck")[0];
 var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
 cards = cards.concat(cards);
 
-
 var currentCard;
 
-//Create all the cards and assign their icons
+/**
+* Create all the cards and assign their icons
+* Set the click listener on each card
+*/
 function InitDeck(){
     for(var i = 0; i < 16; i++){
         var icon = document.createElement("i");
@@ -62,12 +64,6 @@ function start(){
     }
 
 }
-
-
-
-
-
-
 
 function time(){
     if(started){
