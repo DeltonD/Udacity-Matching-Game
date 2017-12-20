@@ -70,17 +70,16 @@ h1 {
     font-size: 33px;
     pointer-events: none;
 }
+
 .deck .card.close{
     font-size: 0px;
     animation: card-open 1s alternate;
-
 }
 
 .deck .card.match {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
-
 }
 
 .deck .card.wrong {
@@ -103,7 +102,6 @@ h1 {
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
-
 }
 
 .score-panel .stars {
