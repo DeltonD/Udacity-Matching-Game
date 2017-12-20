@@ -111,7 +111,7 @@ function Wrong(card, currentc){
     window.setTimeout(function(){
         card.className = "card close";
         currentc.className= "card close";
-    }, 500);
+    }, 1000);
 }
 function Match(card, currentc){
     card.className = "card match";
