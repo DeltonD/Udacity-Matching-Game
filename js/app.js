@@ -1,4 +1,3 @@
-var play = true;
 var started = false;
 var moves = 0;
 var stars = 3;
@@ -9,7 +8,8 @@ var starsE = document.getElementsByClassName("stars")[0];
 var counter = document.getElementsByClassName("moves")[0];
 var timerE = document.getElementsByClassName("timer")[0];
 var deck = document.getElementsByClassName("deck")[0];
-var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
+var cards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
+cards = cards.concat(cards);
 
 
 var currentCard;
@@ -17,24 +17,22 @@ var currentCard;
 //Create all the cards and assign their icons
 function InitDeck(){
     for(var i = 0; i < 16; i++){
-        var cardc = document.createElement("div");
-        cardc.setAttribute("class", "cardcontainer");
+        var icon = document.createElement("i");
+        icon.setAttribute("class", "fa fa-" + cards[i]);
 
         var card = document.createElement("li");
         card.setAttribute("class", "card");
         card.setAttribute("id", i);
-        var icon = document.createElement("i");
-        icon.setAttribute("class", "fa fa-" + cards[i]);
-
+        card.addEventListener("click", cardClick);
         card.append(icon);
+
+        var cardc = document.createElement("div");
+        cardc.setAttribute("class", "cardcontainer");
         cardc.append(card);
+
         deck.append(cardc);
     }
 }
-
-InitEventSystem();
-start();
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -65,6 +63,12 @@ function start(){
 
 }
 
+
+
+
+
+
+
 function time(){
     if(started){
         timer++;
@@ -85,12 +89,12 @@ function restart(){
     timer = 0;
     moves = 0;
     stars = 3;
+    match = 0;
     currentCard = null;
     counter.textContent = moves;
     started = false;
     clearInterval(interval);
     start();
-
 }
 
 /**
@@ -100,10 +104,18 @@ function restart(){
 */
 function showCard(c){
     c.target.className = "card show";
+    deck.style.pointerEvents = "none";
+    window.setTimeout(function(){
+        deck.style.pointerEvents = "auto";
+    }, 1000);
 }
 function Wrong(card, currentc){
     card.className = "card wrong";
     currentc.className = "card wrong";
+    window.setTimeout(function(){
+        card.className = "card close";
+        currentc.className= "card close";
+    }, 500);
 }
 function Match(card, currentc){
     card.className = "card match";
@@ -115,8 +127,9 @@ function Match(card, currentc){
 }
 
 function win(){
+    clearInterval(interval);
     var popup = document.getElementsByClassName("popup")[0];
-    popup.children[2].textContent = "With " + moves + " Moves and " + stars + " Stars.";
+    popup.children[2].textContent = `With ${moves} Moves and ${stars} Stars in ${timer} Minutes.`;
     popup.style.display = "flex";
 }
 
@@ -125,13 +138,14 @@ function win(){
 * The function also calls the updateScore function, that will increase the move counter and update the star rating when needed.
 */
 function cardClick(c){
+    showCard(c);
     if(!started) started = true;
     var card = c.target;
     if(currentCard == null){
         currentCard = card;
     }else{
         updateScore();
-        if(cards[card.getAttribute("id")] === cards[currentCard.getAttribute("id")]){
+        if(cards[card.id] === cards[currentCard.id]){
             Match(card, currentCard);
         }else{
             Wrong(card, currentCard);
@@ -153,28 +167,5 @@ function updateScore(){
     }
 }
 
-/**
-* These are the Events
-* The first one triggers when a animation starts, then the player is unable to click while the animation is occurring;
-* The second one triggers when a animation ends, then is checked if it was on a wrong card try, if true, the card class is changed, so the opening animation plays backwards.
-* The third fires when the player clicks on a card, that way the card is flipped and all the process of checking occurs.
-*/
-function InitEventSystem(){
-    deck.addEventListener("animationstart", (e)=>{
-        play = false;
-    });
-    deck.addEventListener("animationend", (e) => {
-        play = true;
-        var c = e.target.className;
-        if(c == "card wrong"){
-            e.target.className = "card close";
-        }
-    });
-    deck.addEventListener("click", (e) => {
-        if(play && e.target.nodeName == "LI"){
-            showCard(e);
-            cardClick(e);
-        }
-    });
-}
+start();
 
