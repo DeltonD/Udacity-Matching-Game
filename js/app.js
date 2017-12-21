@@ -99,6 +99,7 @@ function restart(){
 * The last one also count on combinations, and if there is already 8, the player wins.
 */
 function showCard(c){
+    c.target.className = "card";
     c.target.className = "card show";
     deck.style.pointerEvents = "none";
     window.setTimeout(function(){

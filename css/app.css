@@ -37,8 +37,10 @@ h1 {
  * Styles for the deck of cards
  */
 .deck {
-    width: 660px;
-    min-height: 680px;
+    max-width: 660px;
+    width: 100vw;
+    height: 100vw;
+    max-height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -51,8 +53,8 @@ h1 {
 }
 
 .deck .card {
-    height: 125px;
-    width: 125px;
+    height: 100%;
+    width: 100%;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -91,8 +93,10 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 125px;
-    width: 125px;
+    max-height: 125px;
+    max-width: 125px;
+    height: 20vw;
+    width: 20vw;
 }
 
 /*
