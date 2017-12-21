@@ -1,6 +1,0 @@
-1: Exibir o tempo no popup final X
-2: Resolver o bug do segundo click na carta X
-3: Parar o contador no win
-4: Tornar o jogo responsivo
-5: Alterar o formato do tempo
-6: Remover a função InitEventSystem e passar para a InitDeck
